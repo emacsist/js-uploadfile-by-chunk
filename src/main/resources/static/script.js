@@ -48,7 +48,7 @@
         for (let key in metaData) {
             queryString += encodeURIComponent(key) + "=" + encodeURIComponent(metaData[key]) + "&";
         }
-        oReq.open("POST", '/upload?' + queryString, true);
+        oReq.open("POST", '/upload/raf?' + queryString, true);
         oReq.onload = function (oEvent) {
             console.info(oEvent);
         };

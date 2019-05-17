@@ -41,6 +41,17 @@ public class UploadController {
         return "ok";
     }
 
+    @RequestMapping(value = "/upload/raf", method = RequestMethod.POST)
+    public String uploadRaf(HttpServletRequest request, int chunks, int nth, long start, long end, @RequestParam("fileName") String name, @RequestParam("fileSize") long totalLen, String md5) throws IOException {
+        final RandomAccessFile randomAccessFile = new RandomAccessFile("/tmp/" + name, "rw");
+        randomAccessFile.setLength(totalLen);
+        byte[] bodys = ByteStreams.toByteArray(request.getInputStream());
+        randomAccessFile.seek(start);
+        randomAccessFile.write(bodys);
+        randomAccessFile.close();
+        return "ok";
+    }
+
     @RequestMapping(value = "/upload", method = RequestMethod.POST)
     public String upload(HttpServletRequest request, int chunks, int nth, long start, long end, @RequestParam("fileName") String name, @RequestParam("fileSize") long totalLen, String md5) throws IOException {
         byte[] bodys = ByteStreams.toByteArray(request.getInputStream());
